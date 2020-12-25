@@ -17,7 +17,7 @@
             </StackPanel>
 
             <StackPanel>
-                <Button Click="createCardBtn">Создать кошелёк</Button>
+                <Button Click="createCardBtn" Style="{StaticResource SecondaryButton}" Margin="5">Создать кошелёк</Button>
             </StackPanel>
 
             <StackPanel Margin="5 50 5 5" Background="LightGray" >
@@ -32,7 +32,7 @@
                 </DockPanel>
                 <TextBlock  Text="Введите сумму" />
                 <TextBox Background="Gray" x:Name="tbSum"></TextBox>
-                <Button HorizontalAlignment="Right" Content="Отправить" Click="SendBtn"/>
+                <Button HorizontalAlignment="Right" Content="Отправить" Style="{StaticResource SecondaryButton}" Background="Gray" Click="SendBtn"/>
             </StackPanel>
 
         </StackPanel>

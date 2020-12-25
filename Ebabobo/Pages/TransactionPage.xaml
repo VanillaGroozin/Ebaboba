@@ -14,8 +14,8 @@
         <StackPanel Grid.Column="0" Margin="0 0 5 0">
             <TextBlock FontSize="20" FontWeight="Bold">Список ваших категорий</TextBlock>
 
-            <Grid  x:Name="listOfCategory" Margin="0 5 0 0" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="100" >
-                <DataGrid HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  x:Name="listOfCategoryDataGrid" ItemsSource="{Binding}" MouseDoubleClick="listOfCategoryDataGrid_MouseDoubleClick">
+            <Grid  x:Name="listOfCategory"  ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="100" Background="Gray" >
+                <DataGrid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5" x:Name="listOfCategoryDataGrid" ItemsSource="{Binding}" MouseDoubleClick="listOfCategoryDataGrid_MouseDoubleClick">
                 </DataGrid>
             </Grid>
             <Grid>
@@ -23,8 +23,8 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="160"/>
                 </Grid.ColumnDefinitions>
-                <Button Content="Добавить категорию" Width="150" Margin="0 5 0 0" HorizontalAlignment="Right" Click="addCategoryBtn"></Button>
-                <Button Grid.Column="1" Content="Удалить категорию" BorderThickness="0" Width="150" Margin="0 5 0 0" HorizontalAlignment="Right" Click="deleteCategoryBtn"></Button>
+                <Button Content="Добавить категорию" Width="150" Style="{StaticResource SecondaryButton}" Margin="0 5 0 0" HorizontalAlignment="Right" Click="addCategoryBtn"></Button>
+                <Button Grid.Column="1" Content="Удалить категорию" Style="{StaticResource SecondaryButton}" BorderThickness="0" Width="150" Margin="0 5 0 0" HorizontalAlignment="Right" Click="deleteCategoryBtn"></Button>
             </Grid>
             <TextBlock Margin="0 20 0 0" FontSize="20" FontWeight="Bold">Создание транзакции</TextBlock>
             <Grid>
@@ -51,7 +51,7 @@
                 <TextBlock Margin="0 5 0 5" Grid.Row="1" Grid.Column="1">Сумма</TextBlock>
                 <TextBox Margin="0 5 0 5" Grid.Row="1" Grid.Column="1" Width="120" HorizontalAlignment="Right" x:Name="tb_sourceSum"/>
                 <DatePicker  Margin="0 5 0 5" Grid.Row="2" Grid.Column="1" Name="First_date" IsDropDownOpen="True" SelectedDateFormat="Short" ></DatePicker>
-                <Button Grid.Row="3" Grid.Column="1" Content="Добавить"  HorizontalAlignment="Right" Click="addSourceBtn"></Button>
+                <Button Grid.Row="3" Grid.Column="1" Content="Добавить" Style="{StaticResource SecondaryButton}"  HorizontalAlignment="Right" Click="addSourceBtn"></Button>
 
             </Grid>
         </StackPanel>
