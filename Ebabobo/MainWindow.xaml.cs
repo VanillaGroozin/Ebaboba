@@ -328,7 +328,7 @@ namespace Ebabobo
 
         void window1_Closed(object sender, EventArgs e)
         {
-            cards.Clear();
+            listOfCards.DataContext = null;
             ShowCards();
         }
 

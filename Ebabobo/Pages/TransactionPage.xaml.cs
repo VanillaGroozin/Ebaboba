@@ -35,12 +35,6 @@ namespace Ebabobo.Pages
             ShowCategoryes();
         }
 
-        public TransactionPage(string newCategory)
-        {
-            InitializeComponent();
-
-            UpdatePageAfterCreateCategory();
-        }
         private void ShowCategoryes()
         {
             transactionType = new TransactionType().SelectAll();
@@ -58,11 +52,6 @@ namespace Ebabobo.Pages
 
         }
 
-        public void UpdatePageAfterCreateCategory()
-        {
-            ShowCategoryes();
-        }
-
         private void deleteCategoryBtn(object sender, RoutedEventArgs e)
         {
             if (category != null)
@@ -73,7 +62,7 @@ namespace Ebabobo.Pages
                     transactionType.Delete();
                 }
             }
-
+            listOfCategory.DataContext = null;
             ShowCategoryes();
 
         }
@@ -156,6 +145,7 @@ namespace Ebabobo.Pages
 
         void categoryWindow_Closed(object sender, EventArgs e)
         {
+            listOfCategory.DataContext = null;
             ShowCategoryes();
 
         }
