@@ -24,15 +24,25 @@ namespace Ebabobo.Pages
     {
         DataTable incomeClone = null;
         DataTable outcomeClone = null;
+
+        private Random randForDate = new Random();
+        private Random randForFrequency = new Random();
+        private Random randForSum = new Random();
         public IncomeExpensesPage()
         {
             InitializeComponent();
-            ShowIncomeMethod();
+            if (MainWindow.CARDID == 0)
+            {
+                ShowIncomeMethod("1");
+            }
+            else
+                ShowIncomeMethod(MainWindow.CARDID.ToString());
         }
 
-        public void ShowIncomeMethod()
+        public void ShowIncomeMethod(string id)
         {
-            DataTable incomeOutcome = new Schedule().SelectByCardId(MainWindow.CARDID.ToString());
+
+            DataTable incomeOutcome = new Schedule().SelectByCardId(id);
 
             var income = from row in incomeOutcome.AsEnumerable()
                          where row.Field<bool>("IsIncome") == true
@@ -61,12 +71,55 @@ namespace Ebabobo.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            Schedule schedule = new Schedule();
+            int cardsCount = new Card().SelectCardsCount();
+            Card card = new Card((cardsCount).ToString());
+
+            int typesCount = new TransactionType().SelectTypesCount();
+            TransactionType transactionType = new TransactionType((typesCount).ToString());
+
+            DateTime start = new DateTime(2020, 10, 10);
+            int range = (DateTime.Today - start).Days;
+            start.AddDays(randForDate.Next(range));
+
+            string frequency = randForFrequency.Next(1, 5).ToString();
+            string sum = randForSum.Next(501, 10000).ToString();
+
+            schedule.CardId = card.CardId;
+            schedule.Date = start.ToString();
+            schedule.Frequency = frequency;
+            schedule.IsIncome = transactionType.IsIncome;
+            schedule.Sum = sum;
+            schedule.TypeId = transactionType.TransactionTypeId;
+
+            schedule.Insert();
 
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            Schedule schedule = new Schedule();
+            int cardsCount = new Card().SelectCardsCount();
+            Card card = new Card((cardsCount).ToString());
 
+            int typesCount = new TransactionType().SelectTypesCount();
+            TransactionType transactionType = new TransactionType((typesCount).ToString());
+
+            DateTime start = new DateTime(2020, 10, 10);
+            int range = (DateTime.Today - start).Days;
+            start.AddDays(randForDate.Next(range));
+
+            string frequency = randForFrequency.Next(1, 5).ToString();
+            string sum = randForSum.Next(501, 10000).ToString();
+
+            schedule.CardId = card.CardId;
+            schedule.Date = start.ToString();
+            schedule.Frequency = frequency;
+            schedule.IsIncome = "0";
+            schedule.Sum = sum;
+            schedule.TypeId = transactionType.TransactionTypeId;
+
+            schedule.Insert();
         }
 
     }

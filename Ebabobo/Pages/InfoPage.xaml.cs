@@ -25,23 +25,39 @@ namespace Ebabobo.Pages
         public InfoPage()
         {
             InitializeComponent();
+
+            Card card = new Card("1");
+            CardName.Text = card.Name;
+            DrawIncomeChart(1);
+            DrawOutcomeChart(1);
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        public InfoPage(int id)
         {
-            DrawIncomeChart(2);
-            DrawOutcomeChart(2);
+            InitializeComponent();
+
+            Card card = new Card(id.ToString());
+            CardName.Text = card.Name;
+            DrawIncomeChart(id);
+            DrawOutcomeChart(id);
         }
 
         private void DrawIncomeChart(int cardId)
         {
             var allHistory = new History().GetHistoryByCard(cardId.ToString(), true);
-            ((ColumnSeries)ChartIncome.Series[0]).ItemsSource = allHistory;
+            if (allHistory.Count != 0)
+            {
+                ((ColumnSeries)ChartIncome.Series[0]).ItemsSource = allHistory;
+            }
         }
         private void DrawOutcomeChart(int cardId)
         {
             var allHistory = new History().GetHistoryByCard(cardId.ToString(), false);
-            ((ColumnSeries)ChartOutcome.Series[0]).ItemsSource = allHistory;
+            if (allHistory.Count != 0)
+            {
+                ((ColumnSeries)ChartOutcome.Series[0]).ItemsSource = allHistory;
+            }
+
         }
     }
 

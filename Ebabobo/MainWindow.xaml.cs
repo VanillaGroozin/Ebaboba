@@ -349,6 +349,7 @@ namespace Ebabobo
             var dr = card.Row[0];
             CARDID = Convert.ToInt32(dr);
 
+            InfoPage = new InfoPage(CARDID);
             IncomeExpensesPage = new IncomeExpensesPage();
         }
     }
