@@ -67,6 +67,17 @@ namespace Ebabobo.Models
             return returnValue;
         }
 
+        public int SelectTypesCount()
+        {
+            QueryLite query = new QueryLite(ConfigurationManager.ConnectionStrings["EbabobaConnectionString"].ConnectionString);
+            query.Add($"select Count(TransactionTypeId) from TransactionType");
+            var returnValue = query.ExecuteAndGet();
+            query.Clear();
+
+            int count = returnValue.Rows.Count;
+            return count;
+        }
+
         public void Delete()
         {
             QueryLite query = new QueryLite(ConfigurationManager.ConnectionStrings["EbabobaConnectionString"].ConnectionString);

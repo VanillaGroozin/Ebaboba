@@ -8,12 +8,11 @@
 xmlns:DVC="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit" 
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="InfoPage"
-      Loaded="Page_Loaded">
+      Title="InfoPage">
 
     <StackPanel Background="Bisque">
         <TextBlock Margin="20 20 0 0" FontSize="15"> Название кошелька</TextBlock>
-        <TextBlock FontSize="40" HorizontalAlignment="Center">??????</TextBlock>
+        <TextBlock x:Name="CardName" FontSize="40" HorizontalAlignment="Center">??????</TextBlock>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
