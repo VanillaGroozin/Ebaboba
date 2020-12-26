@@ -73,7 +73,7 @@ namespace Ebabobo.Pages
         {
             Schedule schedule = new Schedule();
             int cardsCount = new Card().SelectCardsCount();
-            Card card = new Card((cardsCount).ToString());
+            Card card = new Card(MainWindow.CARDID.ToString());
 
             int typesCount = new TransactionType().SelectTypesCount();
             TransactionType transactionType = new TransactionType((typesCount).ToString());
@@ -93,14 +93,17 @@ namespace Ebabobo.Pages
             schedule.TypeId = transactionType.TransactionTypeId;
 
             schedule.Insert();
+            listOfIncome.DataContext = null;
+            listOfOutcome.DataContext = null;
 
+            ShowIncomeMethod(MainWindow.CARDID.ToString());
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             Schedule schedule = new Schedule();
             int cardsCount = new Card().SelectCardsCount();
-            Card card = new Card((cardsCount).ToString());
+            Card card = new Card(MainWindow.CARDID.ToString());
 
             int typesCount = new TransactionType().SelectTypesCount();
             TransactionType transactionType = new TransactionType((typesCount).ToString());
@@ -120,6 +123,10 @@ namespace Ebabobo.Pages
             schedule.TypeId = transactionType.TransactionTypeId;
 
             schedule.Insert();
+            listOfIncome.DataContext = null;
+            listOfOutcome.DataContext = null;
+
+            ShowIncomeMethod(MainWindow.CARDID.ToString());
         }
 
     }

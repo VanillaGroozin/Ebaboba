@@ -44,6 +44,8 @@ namespace Ebabobo
             card.CurrencyId = cbCurrency.SelectedValue.ToString();
             card.Sum = "0";
             dbManager.Insert(card);
+
+            this.Close();
         }
     }
 }
