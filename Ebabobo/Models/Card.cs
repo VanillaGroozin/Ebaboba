@@ -37,7 +37,7 @@ namespace Ebabobo.Models
 
             Dictionary<string, string> updates = new Dictionary<string, string>();
             updates.Add("Name", this.Name);
-            updates.Add("Sum", this.Sum);
+            updates.Add("Sum", this.Sum.Replace(',','.'));
             updates.Add("CurrencyId", this.CurrencyId);
 
             query.Add("update crd");
@@ -62,6 +62,16 @@ namespace Ebabobo.Models
         {
             QueryLite query = new QueryLite(ConfigurationManager.ConnectionStrings["EbabobaConnectionString"].ConnectionString);
             query.Add($"select * from Card");
+            var returnValue = query.ExecuteAndGet();
+            query.Clear();
+            return returnValue;
+        }
+
+        public DataTable SelectAllByCurrency(string currencyId)
+        {
+            QueryLite query = new QueryLite(ConfigurationManager.ConnectionStrings["EbabobaConnectionString"].ConnectionString);
+            query.Add($"select * from Card where @CurrencyId = CurrencyId");
+            query.AddParameter("@CurrencyId", currencyId);
             var returnValue = query.ExecuteAndGet();
             query.Clear();
             return returnValue;

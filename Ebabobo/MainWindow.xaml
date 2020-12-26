@@ -22,10 +22,10 @@
 
             <StackPanel Margin="5 50 5 5" Background="LightGray" >
                 <TextBlock Height="20" Text="Совершить перевод" TextAlignment="Center"/>
-                <TextBlock Text="Введите счёт получателя" />
-                <TextBox  Background="Gray" x:Name="tbReceiver"></TextBox>
-                <TextBlock Text="Выберите ваш счёт" />
-                <ComboBox x:Name="cbCards"/>
+                <TextBlock Text="Введите счёт отправителя" />
+                <ComboBox  Background="Gray" x:Name="cbFromCard" SelectionChanged="cbFromCard_SelectionChanged"/>
+                <TextBlock Text="Выберите ваш получателя" />
+                <ComboBox x:Name="cbToCard"/>
                 <DockPanel>
                     <TextBlock Text="Валюта этого счёта:"/>
                     <TextBlock x:Name="tbCurrencyOfCard" Width="20" Text="?"/>

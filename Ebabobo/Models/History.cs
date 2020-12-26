@@ -77,7 +77,6 @@ namespace Ebabobo.Models
             var returnValue = query.ExecuteAndGet();
             query.Clear();
             return returnValue;
-
         }
 
         public Dictionary<string, double> GetHistoryByCard(string cardId, bool isIncome)
@@ -100,16 +99,17 @@ namespace Ebabobo.Models
 
         }
 
-        public DataTable GetTransactionsInfo(bool outcome, bool income, DateTime? dateBegin, DateTime? dateEnd, object type, object currency)
+        public DataTable GetTransactionsInfo(bool outcome, bool income, DateTime? dateBegin, DateTime? dateEnd, object type, object currency, object card)
         {
             QueryLite query = new QueryLite(ConfigurationManager.ConnectionStrings["EbabobaConnectionString"].ConnectionString);
             query.Add($"select tt.Name 'Тип', concat((case h.IsIncome when 1 then '+' else '-' end), h.Sum) 'Cумма', c.Name 'Валюта', h.Date 'Дата' from History h " +
                 $"join Currency c on h.CurrencyId = c.CurrencyId " +
-                $"join TransactionType tt on tt.TransactionTypeId = h.TypeId ");
+                $"left join TransactionType tt on tt.TransactionTypeId = h.TypeId ");
             var wheres = new Dictionary<string, string>();
             
             if (type != null) wheres.Add("h.TypeId", type.ToString());
             if (currency != null) wheres.Add("h.Currencyid", currency.ToString());
+            if (card != null) wheres.Add("h.CardId", card.ToString());
             if (dateEnd != null) query.Add($" and '{dateEnd.ToString()}' > h.Date");
             if (dateBegin != null) query.Add($" and '{dateBegin.ToString()}' < h.Date");
             if (outcome && income) query.Add(" and h.IsIncome in (1, 0)");

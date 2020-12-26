@@ -39,7 +39,12 @@
                     <TextBlock>Валюта</TextBlock>
                     <ComboBox  x:Name="cbCurrencyName"></ComboBox>
                 </StackPanel>
-                <Button Margin="10" Grid.Column="3" Click="Button_Click" Background="Gray" Style="{StaticResource SecondaryButton}">Submit</Button>
+                <StackPanel Grid.Column="3" Orientation="Vertical" Margin="20 5" Width="100">
+                    <TextBlock>Карта</TextBlock>
+                    <ComboBox  x:Name="cbCard"></ComboBox>
+                    <Button Margin="10" Grid.Column="3" Click="Button_Click" Background="Gray" Style="{StaticResource SecondaryButton}">Submit</Button>
+                </StackPanel>
+                
             </Grid>
         </Grid>
 

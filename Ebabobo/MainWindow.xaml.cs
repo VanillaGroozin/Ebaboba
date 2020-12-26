@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -35,11 +36,96 @@ namespace Ebabobo
         {
             InitializeComponent();
             FillCardGrid();
-
+            FillTransactionCards();
             InfoFrame.Navigate(InfoPage);
 
             AutomaticIncomeSchedule();
             ShowCards();
+        }
+
+        private void FillTransactionCards()
+        {
+            FillByAllCards(cbFromCard);
+            FillByAllCards(cbToCard);
+        }
+
+        private void FillByAllCards(ComboBox cardCb)
+        {
+            var dt = new Card().SelectAll();
+            FillCardComboBox(cardCb, dt);
+        }
+
+        private void FillCardComboBox(ComboBox cardCb, DataTable dt)
+        {
+            cardCb.ItemsSource = dt.DefaultView;
+            cardCb.DisplayMemberPath = "Name";
+            cardCb.SelectedValuePath = "CardId";
+        }
+
+        private void cbFromCard_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var cardFrom = new Card(cbFromCard.SelectedValue.ToString());
+            tbCurrencyOfCard.Text = new Currency(cardFrom.CurrencyId).Name;
+            FillCardComboBox(cbToCard, new Card().SelectAllByCurrency(cardFrom.CurrencyId));
+        }
+
+        private void SendBtn(object sender, RoutedEventArgs e)
+        {
+            try
+            {                
+                if (cbFromCard.SelectedValue.Equals(cbToCard.SelectedValue))
+                    throw new Exception("Выбраны одинаковые карты!");
+
+                double sumToSend = 0;
+                if (!double.TryParse(tbSum.Text.Replace('.', ','), out sumToSend))
+                    throw new Exception("Неверное значение суммы!");
+
+                var cardFrom = new Card(cbFromCard.SelectedValue.ToString());
+                if (double.TryParse(cardFrom.Sum, out var sum))
+                {
+                    if (sum - sumToSend >= 0)
+                    {
+                        var cardTo = new Card(cbToCard.SelectedValue.ToString());
+                        using (TransactionScope scope = new TransactionScope())
+                        {                          
+                            cardFrom.Sum = (sum - sumToSend).ToString();
+                            cardTo.Sum = (Double.Parse(cardTo.Sum) + sumToSend).ToString();
+                            cardFrom.Update();
+                            cardTo.Update();
+                            
+                            MessageBox.Show("Перевод завершен!");
+                            scope.Complete();                           
+                        }
+                        var historyFrom = new History();                     
+                        historyFrom.CardId = cardFrom.CardId;
+                        historyFrom.Sum = sumToSend.ToString();
+                        historyFrom.CurrencyId = cardFrom.CurrencyId;
+                        historyFrom.Date = DateTime.Now.ToString();
+                        historyFrom.IsIncome = "0";
+                        historyFrom.TypeId = "0";
+
+                        var historyTo = new History();
+                        historyTo.CardId = cardTo.CardId;
+                        historyTo.Sum = sumToSend.ToString();
+                        historyTo.CurrencyId = cardTo.CurrencyId;
+                        historyTo.Date = DateTime.Now.ToString();
+                        historyTo.IsIncome = "1";
+                        historyTo.TypeId = "0";
+
+                        historyFrom.Insert();
+                        historyTo.Insert();
+                        FillCardGrid();
+                    } 
+                    else 
+                        throw new Exception("Недостаточно средств!");
+                }
+                else
+                    throw new Exception($"Ошибка карты {cardFrom.Name}!");        
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         //back Календарная Автоматика
@@ -329,13 +415,11 @@ namespace Ebabobo
         void window1_Closed(object sender, EventArgs e)
         {
             listOfCards.DataContext = null;
+            FillTransactionCards();
             ShowCards();
         }
 
-        private void SendBtn(object sender, RoutedEventArgs e)
-        {
 
-        }
 
         private void listOfOperationsGV_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

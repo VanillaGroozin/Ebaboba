@@ -19,8 +19,8 @@ namespace Ebabobo.Models
         public Currency(string id)
         {
             QueryLite query = new QueryLite(ConfigurationManager.ConnectionStrings["EbabobaConnectionString"].ConnectionString);
-            query.Add($"select * from Currency where @CurrencyId = {id}");
-            query.AddParameter("CurrencyId", id.ToString());
+            query.Add($"select * from Currency where @CurrencyId = CurrencyId");
+            query.AddParameter("@CurrencyId", id.ToString());
             var dt = query.ExecuteAndGet();
 
             this.CurrencyId = id;

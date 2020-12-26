@@ -24,11 +24,14 @@ namespace Ebabobo.Pages
         public OperationsPage()
         {
             InitializeComponent();
-            
+            FillCardCb();
             FillCurrencyCb();
             FillCategoryCb();
             FillOperationsList();
         }
+
+     
+
         private void FillOperationsList()
         {
             var dt = new History().GetTransactionsInfo(
@@ -37,7 +40,8 @@ namespace Ebabobo.Pages
                 dateBegin: First_date.SelectedDate,
                 dateEnd: Second_date.SelectedDate,
                 type: cbTypeName.SelectedValue,
-                currency: cbCurrencyName.SelectedValue);
+                currency: cbCurrencyName.SelectedValue,
+                card: cbCard.SelectedValue);
 
             listOfOperationsGV.DataContext = dt.DefaultView;
         }
@@ -55,6 +59,14 @@ namespace Ebabobo.Pages
             cbTypeName.ItemsSource = dt.DefaultView;
             cbTypeName.DisplayMemberPath = "Name";
             cbTypeName.SelectedValuePath = "TransactionTypeId";
+        }
+
+        private void FillCardCb()
+        {
+            var dt = new Card().SelectAll();
+            cbCard.ItemsSource = dt.DefaultView;
+            cbCard.DisplayMemberPath = "Name";
+            cbCard.SelectedValuePath = "CardId";
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
