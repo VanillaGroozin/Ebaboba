@@ -94,6 +94,8 @@ namespace Ebabobo.Pages
 
             schedule.Insert();
 
+            ShowIncomeMethod(MainWindow.CARDID.ToString());
+
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -120,6 +122,7 @@ namespace Ebabobo.Pages
             schedule.TypeId = transactionType.TransactionTypeId;
 
             schedule.Insert();
+            ShowIncomeMethod(MainWindow.CARDID.ToString());
         }
 
     }
