@@ -135,6 +135,7 @@ namespace Ebabobo
         //5 записываю в историю ид-карты, даты, инком-тру, сумму и тип
         //6 меняю дату в schedule Date
         //7 при входе в программу запускаю скрипт в отдельном потоке
+        //запускать в потоке нет нужды, скрипт работает быстро
         //8 готово
 
         private void CardIncomeUpdate(string cardId, double sum)
@@ -184,7 +185,6 @@ namespace Ebabobo
             schedule.Update();
             schedule = null;
         }
-
 
         private double DoNoteRepeatYourSelf(int monthOrWeekOrDay, double schedulIncomeSum)
         {
@@ -301,7 +301,7 @@ namespace Ebabobo
                             }
                             else if (scheduleCells[6].ToString() == "False")
                             {
-                                sum = DoNoteRepeatYourSelf((difference.Days / 30), double.Parse(scheduleCells[4].ToString()));
+                                sum = DoNoteRepeatYourSelf((difference.Days / 7), double.Parse(scheduleCells[4].ToString()));
 
                                 //Update Card by cardid sum
                                 CardOutcomeUpdate(scheduleCells[1].ToString(), sum);
@@ -320,7 +320,7 @@ namespace Ebabobo
 
                             if (scheduleCells[6].ToString() == "True")
                             {
-                                sum = DoNoteRepeatYourSelf((difference.Days / 30), double.Parse(scheduleCells[4].ToString()));
+                                sum = DoNoteRepeatYourSelf((difference.Days), double.Parse(scheduleCells[4].ToString()));
 
                                 //Update Card by cardid sum
                                 CardIncomeUpdate(scheduleCells[1].ToString(), sum);
@@ -335,7 +335,7 @@ namespace Ebabobo
                             }
                             else if (scheduleCells[6].ToString() == "False")
                             {
-                                sum = DoNoteRepeatYourSelf((difference.Days / 30), double.Parse(scheduleCells[4].ToString()));
+                                sum = DoNoteRepeatYourSelf((difference.Days), double.Parse(scheduleCells[4].ToString()));
 
                                 //Update Card by cardid sum
                                 CardOutcomeUpdate(scheduleCells[1].ToString(), sum);
@@ -430,11 +430,14 @@ namespace Ebabobo
         {
             DataRowView card = (DataRowView)listOfOperationsGV.SelectedItem;
 
-            var dr = card.Row[0];
-            CARDID = Convert.ToInt32(dr);
+            if(card != null){
 
-            InfoPage = new InfoPage(CARDID);
-            IncomeExpensesPage = new IncomeExpensesPage();
+                var dr = card.Row[0];
+                CARDID = Convert.ToInt32(dr);
+
+                InfoPage = new InfoPage(CARDID);
+                IncomeExpensesPage = new IncomeExpensesPage();
+            }
         }
     }
 }

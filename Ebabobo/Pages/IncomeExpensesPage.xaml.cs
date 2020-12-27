@@ -31,6 +31,7 @@ namespace Ebabobo.Pages
         public IncomeExpensesPage()
         {
             InitializeComponent();
+
             if (MainWindow.CARDID == 0)
             {
                 ShowIncomeMethod("1");
