@@ -346,11 +346,14 @@ namespace Ebabobo
         {
             DataRowView card = (DataRowView)listOfOperationsGV.SelectedItem;
 
-            var dr = card.Row[0];
-            CARDID = Convert.ToInt32(dr);
+            if(card != null){
 
-            InfoPage = new InfoPage(CARDID);
-            IncomeExpensesPage = new IncomeExpensesPage();
+                var dr = card.Row[0];
+                CARDID = Convert.ToInt32(dr);
+
+                InfoPage = new InfoPage(CARDID);
+                IncomeExpensesPage = new IncomeExpensesPage();
+            }
         }
     }
 }

@@ -41,9 +41,15 @@ namespace Ebabobo
             DbManager dbManager = new DbManager();
             Card card = new Card();
             card.Name = tb_accountName.Text;
-            card.CurrencyId = cbCurrency.SelectedValue.ToString();
             card.Sum = "0";
-            dbManager.Insert(card);
+
+            if (card.Name != "" && cbCurrency.SelectedValue != null)
+            {
+                card.CurrencyId = cbCurrency.SelectedValue.ToString();
+                dbManager.Insert(card);
+            }
+            else
+                MessageBox.Show("Введите название и выберите валюту");
 
             this.Close();
         }
