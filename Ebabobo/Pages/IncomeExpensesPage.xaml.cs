@@ -72,8 +72,7 @@ namespace Ebabobo.Pages
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Schedule schedule = new Schedule();
-            int cardsCount = new Card().SelectCardsCount();
-            Card card = new Card((cardsCount).ToString());
+            Card card = new Card(MainWindow.CARDID.ToString());
 
             int typesCount = new TransactionType().SelectTypesCount();
             TransactionType transactionType = new TransactionType((typesCount).ToString());
@@ -101,8 +100,7 @@ namespace Ebabobo.Pages
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             Schedule schedule = new Schedule();
-            int cardsCount = new Card().SelectCardsCount();
-            Card card = new Card((cardsCount).ToString());
+            Card card = new Card(MainWindow.CARDID.ToString());
 
             int typesCount = new TransactionType().SelectTypesCount();
             TransactionType transactionType = new TransactionType((typesCount).ToString());
