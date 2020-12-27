@@ -346,7 +346,8 @@ namespace Ebabobo
         {
             DataRowView card = (DataRowView)listOfOperationsGV.SelectedItem;
 
-            if(card != null){
+            if (card != null)
+            {
 
                 var dr = card.Row[0];
                 CARDID = Convert.ToInt32(dr);
@@ -354,6 +355,9 @@ namespace Ebabobo
                 InfoPage = new InfoPage(CARDID);
                 IncomeExpensesPage = new IncomeExpensesPage();
             }
+            
         }
     }
+
 }
+
