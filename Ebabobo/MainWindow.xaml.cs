@@ -72,7 +72,7 @@ namespace Ebabobo
         private void SendBtn(object sender, RoutedEventArgs e)
         {
             try
-            {                
+            {
                 if (cbFromCard.SelectedValue.Equals(cbToCard.SelectedValue))
                     throw new Exception("Выбраны одинаковые карты!");
 
@@ -87,16 +87,16 @@ namespace Ebabobo
                     {
                         var cardTo = new Card(cbToCard.SelectedValue.ToString());
                         using (TransactionScope scope = new TransactionScope())
-                        {                          
+                        {
                             cardFrom.Sum = (sum - sumToSend).ToString();
                             cardTo.Sum = (Double.Parse(cardTo.Sum) + sumToSend).ToString();
                             cardFrom.Update();
                             cardTo.Update();
-                            
+
                             MessageBox.Show("Перевод завершен!");
-                            scope.Complete();                           
+                            scope.Complete();
                         }
-                        var historyFrom = new History();                     
+                        var historyFrom = new History();
                         historyFrom.CardId = cardFrom.CardId;
                         historyFrom.Sum = sumToSend.ToString();
                         historyFrom.CurrencyId = cardFrom.CurrencyId;
@@ -115,16 +115,18 @@ namespace Ebabobo
                         historyFrom.Insert();
                         historyTo.Insert();
                         FillCardGrid();
-                    } 
-                    else 
+                    }
+                    else
                         throw new Exception("Недостаточно средств!");
                 }
                 else
-                    throw new Exception($"Ошибка карты {cardFrom.Name}!");        
+                    throw new Exception($"Ошибка карты {cardFrom.Name}!");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                if (cbFromCard.Text == string.Empty || cbToCard.Text == string.Empty)
+                    MessageBox.Show("Не введена карта!");
+                else MessageBox.Show(ex.Message);
             }
         }
 
