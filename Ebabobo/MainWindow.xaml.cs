@@ -344,7 +344,15 @@ namespace Ebabobo
 
         private void listOfOperationsGV_Selected(object sender, MouseButtonEventArgs e)
         {
-            DataRowView card = (DataRowView)listOfOperationsGV.SelectedItem;
+            DataRowView card = null;
+            try
+            {
+                card = (DataRowView)listOfOperationsGV.SelectedItem;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Выберите карту");
+            }
 
             if (card != null)
             {
